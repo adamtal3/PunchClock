@@ -63,9 +63,19 @@ namespace PunchClock.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon logo {
+        internal static System.Drawing.Icon clockOff {
             get {
-                object obj = ResourceManager.GetObject("logo", resourceCulture);
+                object obj = ResourceManager.GetObject("clockOff", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon clockOn {
+            get {
+                object obj = ResourceManager.GetObject("clockOn", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

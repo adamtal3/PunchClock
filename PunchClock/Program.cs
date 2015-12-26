@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using PunchClock.Infra;
 
 namespace PunchClock
 {
@@ -16,7 +14,9 @@ namespace PunchClock
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            ScrollLockInterceptor.SetHook();
             Application.Run(new Main());
+            ScrollLockInterceptor.UnhookWindowsHookEx();
         }
     }
 }

@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\logo.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\clockOn.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>PunchClock.Program</StartupObject>
@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infra\ScrollLockInterceptor.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,7 +97,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\logo.ico" />
+    <None Include="Resources\clockOff.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clockOn.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

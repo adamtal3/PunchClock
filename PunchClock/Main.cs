@@ -1,11 +1,18 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using PunchClock.Infra;
+using PunchClock.Properties;
 
 namespace PunchClock
 {
     public partial class Main : MaterialForm
     {
+        private bool _isClockRunning = false;
+        private readonly Timer _timer;
+
         public Main()
         {
             InitializeComponent();
@@ -18,30 +25,79 @@ namespace PunchClock
 
             // Notify icon
             niNotifyIcon.ContextMenu = new ContextMenu(new[] {
-                new MenuItem("Show", niNotifyIcon_Click),
+                new MenuItem("Show", (sender, args) => { this.niNotifyIcon_MouseDoubleClick(sender, null); }),
                 new MenuItem("-"), 
                 new MenuItem("Exit", (sender, args) => { this.Close(); })
             });
+
+            // Scroll Lock handler
+            ScrollLockInterceptor.ScrollLockChange += ScrollLockInterceptorOnScrollLockChange;
+
+            _timer = new Timer { Interval = 10000 };
+            _timer.Tick += (sender, args) => ScrollLockInterceptor.InvokeScrollLockChange();
+            _timer.Start();
         }
 
-        private void btnSave_Click(object sender, System.EventArgs e)
+        private void ScrollLockInterceptorOnScrollLockChange(object sender, ScrollLockChangeEventArgs e)
+        {
+            if (e.IsOn != _isClockRunning)
+            {
+                _isClockRunning = e.IsOn;
+                if (e.IsOn)
+                {
+                    this.Icon = niNotifyIcon.Icon = Resources.clockOn;
+                    Notify("Punch in");
+                }
+                else
+                {
+                    this.Icon = niNotifyIcon.Icon = Resources.clockOff;
+                    Notify("Punch out");
+                }
+            }
+        }
+
+        private void Notify(string text)
+        {
+            niNotifyIcon.BalloonTipText = text;
+            niNotifyIcon.ShowBalloonTip(1000);
+        }
+
+        #region Event Handlers
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+            // Start minimized
+            HideSoon();
+        }
+
+        private async Task HideSoon()
+        {
+            await Task.Delay(1000);
+            _dontShowStillRunning = true;
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
         {
             // Save changed to configuration json file
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void btnCancel_Click(object sender, System.EventArgs e)
+        private void btnCancel_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void Main_Resize(object sender, System.EventArgs e)
+        private bool _dontShowStillRunning = false;
+        private void Main_Resize(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
             {
                 niNotifyIcon.Visible = true;
-                Notify("Punch clock is still running");
+                if (!_dontShowStillRunning)
+                    Notify("Punch clock is still running");
                 this.Hide();
+                InvokeScrollLockChangeSoon();
             }
             else if (this.WindowState == FormWindowState.Normal)
             {
@@ -49,10 +105,10 @@ namespace PunchClock
             }
         }
 
-        private void Notify(string text)
+        private async Task InvokeScrollLockChangeSoon()
         {
-            niNotifyIcon.BalloonTipText = text;
-            niNotifyIcon.ShowBalloonTip(1500);
+            await Task.Delay(1000);
+            ScrollLockInterceptor.InvokeScrollLockChange();
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
@@ -61,12 +117,19 @@ namespace PunchClock
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialogResult != DialogResult.Yes)
                 e.Cancel = true;
+            else
+            {
+                _timer.Stop();
+                ScrollLockInterceptor.ScrollLockChange -= ScrollLockInterceptorOnScrollLockChange;
+            }
         }
 
-        private void niNotifyIcon_Click(object sender, System.EventArgs e)
+        private void niNotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             this.Show();
             this.WindowState = FormWindowState.Normal;
         }
+
+        #endregion
     }
 }

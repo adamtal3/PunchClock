@@ -50,6 +50,8 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.AutoSize = true;
+            this.btnCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnCancel.Depth = 0;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(291, 348);
@@ -57,7 +59,7 @@
             this.btnCancel.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Primary = false;
-            this.btnCancel.Size = new System.Drawing.Size(100, 40);
+            this.btnCancel.Size = new System.Drawing.Size(78, 36);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -69,7 +71,7 @@
             this.niNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("niNotifyIcon.Icon")));
             this.niNotifyIcon.Text = "Punch Clock";
             this.niNotifyIcon.Visible = true;
-            this.niNotifyIcon.Click += new System.EventHandler(this.niNotifyIcon_Click);
+            this.niNotifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.niNotifyIcon_MouseDoubleClick);
             // 
             // Main
             // 
@@ -85,13 +87,16 @@
             this.MaximumSize = new System.Drawing.Size(500, 400);
             this.MinimumSize = new System.Drawing.Size(500, 400);
             this.Name = "Main";
+            this.Sizable = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Punch Clock";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
+            this.Load += new System.EventHandler(this.Main_Load);
             this.Resize += new System.EventHandler(this.Main_Resize);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
