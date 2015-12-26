@@ -14,7 +14,7 @@ namespace PunchClock.Infra
             return new JsonFile<PunchMonth>(filename);
         }
 
-        public void PunchIn()
+        public DateTime PunchIn()
         {
             _currentFile = GetFile();
             if (_currentFile.Exists())
@@ -34,19 +34,22 @@ namespace PunchClock.Infra
             _currentEntry = new PunchEntry { PunchIn = DateTime.Now };
             day.Entries.Add(_currentEntry);
             _currentFile.Save(_currentMonth);
+            return _currentEntry.PunchIn;
         }
 
-        public void PunchOut()
+        public TimeSpan PunchOut()
         {
             if (_currentEntry != null)
             {
                 _currentEntry.PunchOut = DateTime.Now;
                 _currentFile.Save(_currentMonth);
+                return _currentEntry.Duration;
             }
 
             _currentFile = null;
             _currentMonth = null;
             _currentEntry = null;
+            return new TimeSpan();
         }
     }
 }

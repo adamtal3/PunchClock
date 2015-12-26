@@ -45,7 +45,7 @@ namespace PunchClock.Infra
 
         public override string ToString()
         {
-            return $"{Day} - {WorkTime.ToString(@"hh\:mm\:ss")}";
+            return $"{Day} - {WorkTime.ToTimeString()}";
         }
     }
 

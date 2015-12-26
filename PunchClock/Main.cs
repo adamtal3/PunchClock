@@ -49,14 +49,14 @@ namespace PunchClock
                 if (e.IsOn)
                 {
                     this.Icon = niNotifyIcon.Icon = Resources.clockOn;
-                    _timeCounter.PunchIn();
-                    Notify("Punch in");
+                    var result = _timeCounter.PunchIn();
+                    Notify($"Punch in. {result.ToTimeString()}");
                 }
                 else
                 {
                     this.Icon = niNotifyIcon.Icon = Resources.clockOff;
-                    _timeCounter.PunchOut();
-                    Notify("Punch out");
+                    var result = _timeCounter.PunchOut();
+                    Notify($"Punch out. {result.ToTimeString()}");
                 }
             }
         }
@@ -77,7 +77,7 @@ namespace PunchClock
 
         private async Task HideSoon()
         {
-            await Task.Delay(1000);
+            await Task.Delay(2000);
             _dontShowStillRunning = true;
             this.WindowState = FormWindowState.Minimized;
         }

@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infra\ExtensionMethods.cs" />
     <Compile Include="Infra\JsonFile.cs" />
     <Compile Include="Infra\PunchMonth.cs" />
     <Compile Include="Infra\ScrollLockInterceptor.cs" />
