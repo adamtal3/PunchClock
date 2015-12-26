@@ -60,7 +60,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infra\JsonFile.cs" />
+    <Compile Include="Infra\PunchMonth.cs" />
     <Compile Include="Infra\ScrollLockInterceptor.cs" />
+    <Compile Include="Infra\TimeCounter.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

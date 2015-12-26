@@ -12,6 +12,7 @@ namespace PunchClock
     {
         private bool _isClockRunning = false;
         private readonly Timer _timer;
+        private readonly TimeCounter _timeCounter;
 
         public Main()
         {
@@ -36,6 +37,8 @@ namespace PunchClock
             _timer = new Timer { Interval = 10000 };
             _timer.Tick += (sender, args) => ScrollLockInterceptor.InvokeScrollLockChange();
             _timer.Start();
+
+            _timeCounter = new TimeCounter();
         }
 
         private void ScrollLockInterceptorOnScrollLockChange(object sender, ScrollLockChangeEventArgs e)
@@ -46,11 +49,13 @@ namespace PunchClock
                 if (e.IsOn)
                 {
                     this.Icon = niNotifyIcon.Icon = Resources.clockOn;
+                    _timeCounter.PunchIn();
                     Notify("Punch in");
                 }
                 else
                 {
                     this.Icon = niNotifyIcon.Icon = Resources.clockOff;
+                    _timeCounter.PunchOut();
                     Notify("Punch out");
                 }
             }
