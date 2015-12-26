@@ -35,6 +35,8 @@
             this.niNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.lblCurrentTime = new MaterialSkin.Controls.MaterialLabel();
             this.lblDayTime = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.SuspendLayout();
             // 
             // btnSave
@@ -52,6 +54,8 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.AutoSize = true;
+            this.btnCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnCancel.Depth = 0;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(501, 448);
@@ -59,7 +63,7 @@
             this.btnCancel.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Primary = false;
-            this.btnCancel.Size = new System.Drawing.Size(90, 40);
+            this.btnCancel.Size = new System.Drawing.Size(78, 36);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -79,7 +83,7 @@
             this.lblCurrentTime.Depth = 0;
             this.lblCurrentTime.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblCurrentTime.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblCurrentTime.Location = new System.Drawing.Point(203, 419);
+            this.lblCurrentTime.Location = new System.Drawing.Point(213, 419);
             this.lblCurrentTime.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblCurrentTime.Name = "lblCurrentTime";
             this.lblCurrentTime.Size = new System.Drawing.Size(59, 24);
@@ -92,12 +96,38 @@
             this.lblDayTime.Depth = 0;
             this.lblDayTime.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblDayTime.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblDayTime.Location = new System.Drawing.Point(203, 455);
+            this.lblDayTime.Location = new System.Drawing.Point(213, 455);
             this.lblDayTime.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblDayTime.Name = "lblDayTime";
             this.lblDayTime.Size = new System.Drawing.Size(59, 24);
             this.lblDayTime.TabIndex = 3;
             this.lblDayTime.Text = "00:00";
+            // 
+            // materialLabel1
+            // 
+            this.materialLabel1.AutoSize = true;
+            this.materialLabel1.Depth = 0;
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel1.Location = new System.Drawing.Point(12, 419);
+            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel1.Name = "materialLabel1";
+            this.materialLabel1.Size = new System.Drawing.Size(190, 24);
+            this.materialLabel1.TabIndex = 2;
+            this.materialLabel1.Text = "Current working time:";
+            // 
+            // materialLabel2
+            // 
+            this.materialLabel2.AutoSize = true;
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel2.Location = new System.Drawing.Point(12, 455);
+            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(195, 24);
+            this.materialLabel2.TabIndex = 3;
+            this.materialLabel2.Text = "Today\'s working time:";
             // 
             // Main
             // 
@@ -106,7 +136,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(700, 500);
+            this.Controls.Add(this.materialLabel2);
             this.Controls.Add(this.lblDayTime);
+            this.Controls.Add(this.materialLabel1);
             this.Controls.Add(this.lblCurrentTime);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
@@ -135,6 +167,8 @@
         private System.Windows.Forms.NotifyIcon niNotifyIcon;
         private MaterialSkin.Controls.MaterialLabel lblCurrentTime;
         private MaterialSkin.Controls.MaterialLabel lblDayTime;
+        private MaterialSkin.Controls.MaterialLabel materialLabel1;
+        private MaterialSkin.Controls.MaterialLabel materialLabel2;
     }
 }
 

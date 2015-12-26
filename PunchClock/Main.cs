@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
@@ -50,21 +51,21 @@ namespace PunchClock
                 {
                     this.Icon = niNotifyIcon.Icon = Resources.clockOn;
                     var result = _timeCounter.PunchIn();
-                    Notify($"Punch in. {result.ToTimeString()}");
+                    Notify($"Punch in at {result.ToTimeString()}");
                 }
                 else
                 {
                     this.Icon = niNotifyIcon.Icon = Resources.clockOff;
                     var result = _timeCounter.PunchOut();
-                    Notify($"Punch out. {result.ToTimeString()}");
+                    Notify($"Punch out - total time: {result.ToTimeString()}");
                 }
             }
         }
 
         private void Notify(string text)
         {
-            niNotifyIcon.BalloonTipText = text;
-            niNotifyIcon.ShowBalloonTip(1000);
+            var toast = new Toast() { Content = text };
+            toast.ShowDialog();
         }
 
         #region Event Handlers
@@ -77,7 +78,7 @@ namespace PunchClock
 
         private async Task HideSoon()
         {
-            await Task.Delay(2000);
+            await Task.Delay(500);
             _dontShowStillRunning = true;
             this.WindowState = FormWindowState.Minimized;
         }
@@ -100,7 +101,7 @@ namespace PunchClock
             {
                 niNotifyIcon.Visible = true;
                 if (!_dontShowStillRunning)
-                    Notify("Punch clock is still running");
+                    Notify(string.Join(",", Enumerable.Range(1, 15).Select(x => "Punch clock is still running")));
                 this.Hide();
                 InvokeScrollLockChangeSoon();
             }
@@ -108,6 +109,7 @@ namespace PunchClock
             {
                 niNotifyIcon.Visible = false;
             }
+            _dontShowStillRunning = false;
         }
 
         private async Task InvokeScrollLockChangeSoon()
